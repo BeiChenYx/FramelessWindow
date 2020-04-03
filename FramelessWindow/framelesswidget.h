@@ -8,6 +8,11 @@ namespace Ui {
 class FramelessWidget;
 }
 
+// TODO: 继承FramelessWidget 构造出自定义弹框和三个消息框(提示，警告，错误)
+// TOOD: 增加自定义窗口的进度条
+// TODO: 完成Demo示例，尽可能多的添加控件的样式
+// TODO: 添加自定义tableView控件，能够在水平表头中进行排序，过滤等功能
+
 class FramelessWidget : public QWidget
 {
     Q_OBJECT
