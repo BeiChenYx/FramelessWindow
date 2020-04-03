@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FramelessWidget</class>
+ <widget class="QWidget" name="FramelessWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>645</width>
+    <height>431</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>FramelessWidget</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#windowFrame{
+	border: 2px solid rgb(194, 194, 194); 
+	gridline-color: rgb(194, 194, 194);
+	border-radius: 1px 1px 1px 1px; 
+	background-color: palette(Window);
+}
+#windowTitlebar{
+	border: 0px none palette(base);
+	border-top-left-radius:2px;
+	border-top-right-radius:2px;
+	border-bottom: 8px solid #117ee0; 
+	background-image: url(:/images/6.png);
+	background-color: #237fca;
+	color: #ffffff;	
+}
+#windowTitlebar QToolButton{
+	background-color:none;
+  	border:none;
+  	width:16px;
+  	height:16px;
+ 	padding:4px;
+	border-top-right-radius: 5px;
+}
+#windowTitlebar QToolButton:hover{
+	background-color: #2e9eea;
+}
+#windowTitlebar QToolButton:pressed{
+	background-color:palette(highlight);
+}
+#windowTitlebar #toolButton_close{
+	image: url(:/images/icon_window_close.png);
+}
+#windowTitlebar #toolButton_close:hover{
+	background-color: #DC0000;
+}
+#windowTitlebar #toolButton_close:pressed{
+	background-color: #F1707A;
+}
+#toolButton_max{
+	image: url(:/images/icon_window_maximize.png);
+}
+#toolButton_restore{
+	image: url(:/images/icon_window_restore.png);
+}
+#toolButton_min{
+	image: url(:/images/icon_window_minimize.png);
+}
+#toolButton_full{
+	image: url(:/images/fullscreen.png);
+}
+#toolButton_full_exit{
+	image: url(:/images/fullscreen_exit.png);
+}
+#label_title{
+	color: #ffffff;
+	font-weight:bold;
+	font-size:16px;
+}
+</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>5</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>5</number>
+   </property>
+   <property name="bottomMargin">
+    <number>5</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QWidget" name="windowFrame" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>1</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="WindowDragger" name="windowTitlebar" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>50</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1,0">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_icon">
+           <property name="minimumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="images.qrc">:/images/icon.png</pixmap>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_title">
+           <property name="text">
+            <string>软件标题</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QToolButton" name="toolButton_full_exit">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_full">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_min">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_restore">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_max">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_close">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="windowContent" native="true"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>WindowDragger</class>
+   <extends>QWidget</extends>
+   <header>windowdragger.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
+ <connections/>
+</ui>
