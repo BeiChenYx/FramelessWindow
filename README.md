@@ -12,7 +12,7 @@ Qt Frameless Widget; 基于Qt框架的自定义窗口框架; 参考[Qt-Frameless
 ## Licence
 > The MIT License
 >
-> Copyright (c) 2018, Juergen Skrotzky (https://github.com/Jorgen-VikingGod, JorgenVikingGod@gmail.com)
+> Copyright (c) 2018, Juergen Skrotzky (https://github.com/BeiChenYx, yangxing2297@163.com)
 >
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 > of this software and associated documentation files (the "Software"), to deal
