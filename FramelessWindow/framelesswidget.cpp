@@ -95,10 +95,6 @@ void FramelessWidget::on_toolButton_restore_clicked()
     ui->toolButton_full->setVisible(false);
     setWindowState(Qt::WindowNoState);
     this->styleWindow(true, true);
-    // on MacOS this hack makes sure the
-    // background window is repaint correctly
-//    hide();
-//    show();
     this->update();
 }
 
@@ -143,7 +139,11 @@ void FramelessWidget::on_toolButton_full_exit_clicked()
 void FramelessWidget::styleWindow(bool bActive, bool bNoState)
 {
     auto setShadow = [this](QColor color){
+#if defined(Q_OS_WIN)
         this->layout()->setMargin(15);
+#else
+        this->layout()->setMargin(0);
+#endif
         QGraphicsEffect *oldShadow = ui->windowFrame->graphicsEffect();
         if (oldShadow){delete oldShadow;}
         QGraphicsDropShadowEffect *windowShadow = new QGraphicsDropShadowEffect;
