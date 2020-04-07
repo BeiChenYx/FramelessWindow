@@ -35,8 +35,6 @@ private slots:
     // 全屏进入和退出处理，在最大化才会显示全屏按钮
     void on_toolButton_full_clicked();
     void on_toolButton_full_exit_clicked();
-    // 处理双击事件, 在WindowDragger中发送 doubleCLicked信号
-    void on_windowTitlebar_doubleClicked();
     // 绘制窗口阴影, bActive：窗口是否激活, bNoState: 正常状态
     void styleWindow(bool bActive, bool bNoState);
     bool leftBorderHit(const QPoint &pos);
@@ -48,7 +46,6 @@ protected:
     virtual bool eventFilter(QObject *obj, QEvent *event);
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);
-    virtual void mouseDoubleClickEvent(QMouseEvent *event);
     virtual void checkBorderDragging(QMouseEvent *event);
 
 private:
@@ -56,10 +53,13 @@ private:
     QRect m_StartGeometry;
     const quint8 CONST_DRAG_BORDER_SIZE = 15;
     bool m_bMousePressed = false;
+    bool m_bMousePressedTitle = false;
     bool m_bDragTop = false;
     bool m_bDragLeft = false;
     bool m_bDragRight = false;
     bool m_bDragBottom = false;
+    QPoint m_mousePos;
+    QPoint m_wndPos;
 
     // 全屏之前的窗口位置和尺寸
     QPoint m_fullPoint;

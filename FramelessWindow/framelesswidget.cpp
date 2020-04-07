@@ -167,15 +167,17 @@ void FramelessWidget::styleWindow(bool bActive, bool bNoState)
 }
 
 bool FramelessWidget::eventFilter(QObject *obj, QEvent *event) {
-    if (isMaximized()) {
-        return QWidget::eventFilter(obj, event);
-    }
-
     // check mouse move event when mouse is moved on any object
     if (event->type() == QEvent::MouseMove) {
+        if (isMaximized() || isFullScreen()) {
+            return QWidget::eventFilter(obj, event);
+        }
         QMouseEvent *pMouse = dynamic_cast<QMouseEvent *>(event);
         if (pMouse) {
             checkBorderDragging(pMouse);
+            if(obj == ui->windowTitlebar && m_bMousePressedTitle){
+                move(m_wndPos + (pMouse->globalPos() - m_mousePos));
+            }
         }
     }
     // press is triggered only on frame window
@@ -184,12 +186,29 @@ bool FramelessWidget::eventFilter(QObject *obj, QEvent *event) {
         if (pMouse) {
             mousePressEvent(pMouse);
         }
-    } else if (event->type() == QEvent::MouseButtonRelease) {
+    } else if(event->type() == QEvent::MouseButtonPress && obj == ui->windowTitlebar){
+        QMouseEvent *pMouse = dynamic_cast<QMouseEvent *>(event);
+        if (pMouse) {
+            this->m_bMousePressedTitle = true;
+            this->m_mousePos = pMouse->globalPos();
+            this->m_wndPos = this->pos();
+        }
+    } else if (event->type() == QEvent::MouseButtonRelease && obj == this) {
         if (m_bMousePressed) {
             QMouseEvent *pMouse = dynamic_cast<QMouseEvent *>(event);
             if (pMouse) {
                 mouseReleaseEvent(pMouse);
             }
+        }
+    } else if(event->type() == QEvent::MouseButtonRelease && obj == ui->windowTitlebar){
+        m_bMousePressedTitle = false;
+    } else if(event->type() == QEvent::MouseButtonDblClick && obj == ui->windowTitlebar){
+        if(windowState().testFlag(Qt::WindowNoState) && m_isMax){
+            this->on_toolButton_max_clicked();
+        }else if(windowState().testFlag(Qt::WindowFullScreen)){
+            this->on_toolButton_full_exit_clicked();
+        }else if(windowState().testFlag(Qt::WindowMaximized)){
+            this->on_toolButton_restore_clicked();
         }
     }
 
@@ -232,9 +251,7 @@ bool FramelessWidget::bottomBorderHit(const QPoint &pos) {
 }
 
 void FramelessWidget::mousePressEvent(QMouseEvent *event) {
-    if (isMaximized()) {
-        return;
-    }
+    if (isMaximized()) { return; }
 
     m_bMousePressed = true;
     m_StartGeometry = this->geometry();
@@ -276,39 +293,19 @@ void FramelessWidget::mousePressEvent(QMouseEvent *event) {
 
 void FramelessWidget::mouseReleaseEvent(QMouseEvent *event) {
     Q_UNUSED(event);
-    if (isMaximized()) {
-        return;
-    }
+    if (isMaximized()) { return; }
 
     m_bMousePressed = false;
-    bool bSwitchBackCursorNeeded =
-            m_bDragTop || m_bDragLeft || m_bDragRight || m_bDragBottom;
+    bool bSwitchBackCursorNeeded = m_bDragTop || m_bDragLeft || m_bDragRight || m_bDragBottom;
     m_bDragTop = false;
     m_bDragLeft = false;
     m_bDragRight = false;
     m_bDragBottom = false;
-    if (bSwitchBackCursorNeeded) {
-        setCursor(Qt::ArrowCursor);
-    }
+    if (bSwitchBackCursorNeeded) { setCursor(Qt::ArrowCursor); }
 }
 
-void FramelessWidget::on_windowTitlebar_doubleClicked() {
-    if (windowState().testFlag(Qt::WindowNoState) && m_isMax) {
-        this->on_toolButton_max_clicked();
-    } else if (windowState().testFlag(Qt::WindowFullScreen)) {
-        this->on_toolButton_full_exit_clicked();
-    }else if (windowState().testFlag(Qt::WindowMaximized)) {
-        this->on_toolButton_restore_clicked();
-    }
-}
-
-void FramelessWidget::mouseDoubleClickEvent(QMouseEvent *event) {
-    Q_UNUSED(event);
-}
 void FramelessWidget::checkBorderDragging(QMouseEvent *event) {
-    if (isMaximized()  || isFullScreen()) {
-        return;
-    }
+    if (isMaximized()  || isFullScreen()) { return; }
 
     QPoint globalMousePos = event->globalPos();
     if (m_bMousePressed) {

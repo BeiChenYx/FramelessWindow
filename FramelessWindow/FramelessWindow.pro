@@ -27,11 +27,9 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         framelesswidget.cpp \
-        windowdragger.cpp
 
 HEADERS += \
         framelesswidget.h \
-        windowdragger.h
 
 FORMS += \
         framelesswidget.ui
