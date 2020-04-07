@@ -16,6 +16,12 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void initConnetion();
+    void initUi();
+
+private slots:
+    void on_buttonClickedLeftNav(QAbstractButton *btn);
+
 private:
     Ui::MainWindow *ui;
 };

@@ -121,7 +121,7 @@ QSplitter::handle:pressed {
         <item row="0" column="0">
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <widget class="QToolButton" name="toolButton">
+           <widget class="QToolButton" name="toolButton_base">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -150,7 +150,7 @@ QSplitter::handle:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="toolButton_2">
+           <widget class="QToolButton" name="toolButton_table">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -172,7 +172,7 @@ QSplitter::handle:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="toolButton_3">
+           <widget class="QToolButton" name="toolButton_list">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -194,7 +194,7 @@ QSplitter::handle:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="toolButton_4">
+           <widget class="QToolButton" name="toolButton_tree">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -223,7 +223,7 @@ QSplitter::handle:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="toolButton_5">
+           <widget class="QToolButton" name="toolButton_custom">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -260,9 +260,27 @@ QSplitter::handle:pressed {
       </widget>
       <widget class="QStackedWidget" name="stackedWidget">
        <widget class="QWidget" name="page_base"/>
-       <widget class="QWidget" name="page_table"/>
-       <widget class="QWidget" name="page_list"/>
-       <widget class="QWidget" name="page_tree"/>
+       <widget class="QWidget" name="page_table">
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="0">
+          <widget class="QTableView" name="tableView"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_list">
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="0">
+          <widget class="QListView" name="listView"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_tree">
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="0">
+          <widget class="QTreeView" name="treeView"/>
+         </item>
+        </layout>
+       </widget>
        <widget class="QWidget" name="page_custom"/>
       </widget>
      </widget>
