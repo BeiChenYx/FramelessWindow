@@ -100,7 +100,7 @@
     <widget class="QWidget" name="windowFrame" native="true">
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
        <number>0</number>

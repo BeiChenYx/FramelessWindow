@@ -1,8 +1,6 @@
-#include "framelesswidget.h"
 #include <QApplication>
-#include <QMainWindow>
-#include <QThread>
-#include <QTimer>
+#include "framelesswidget.h"
+#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +13,8 @@ int main(int argc, char *argv[])
 //    FramelessWidget w(true, false);
     // 隐藏最大化, 显示全屏, 这种情况应该无法打开全屏
 //    FramelessWidget w(false, true);
+    auto pMain = new MainWindow(&w);
+    w.setContent(pMain);
     w.show();
     return a.exec();
 }

@@ -27,12 +27,15 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         framelesswidget.cpp \
+        mainwindow.cpp
 
 HEADERS += \
         framelesswidget.h \
+        mainwindow.h
 
 FORMS += \
-        framelesswidget.ui
+        framelesswidget.ui \
+        mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

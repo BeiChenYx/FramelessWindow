@@ -37,7 +37,6 @@ FramelessWidget::FramelessWidget(QWidget *parent) :
     textShadow->setOffset(0.0);
     ui->label_title->setGraphicsEffect(textShadow);
     this->styleWindow(true, true);
-    this->setWindowModified(true);
     QWidget::setWindowTitle(tr("FrameLessWidget"));
 
     QObject::connect(qApp, &QGuiApplication::applicationStateChanged, this,
@@ -63,11 +62,17 @@ void FramelessWidget::setWindowIcon(const QIcon &ico)
 }
 void FramelessWidget::setContent(QWidget *w)
 {
-    ui->windowContent->layout()->addWidget(w);
+    QHBoxLayout *pHlayout = new QHBoxLayout;
+    pHlayout->addWidget(w);
+    pHlayout->setMargin(0);
+    ui->windowContent->setLayout(pHlayout);
 }
 void FramelessWidget::setLayout(QLayout *layout)
 {
-    ui->windowContent->setLayout(layout);
+    QWidget *pWidget = new QWidget(this);
+    pWidget->setLayout(layout);
+    pWidget->setContentsMargins(0, 0, 0, 0);
+    setContent(pWidget);
 }
 
 void FramelessWidget::on_applicationStateChanged(Qt::ApplicationState state)
