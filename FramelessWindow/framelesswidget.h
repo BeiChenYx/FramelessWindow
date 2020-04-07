@@ -3,6 +3,11 @@
 
 #include <QWidget>
 #include <QMouseEvent>
+#include <QHBoxLayout>
+#include <QLayout>
+#include <QProgressBar>
+#include <QTimer>
+#include <QLabel>
 
 namespace Ui {
 class FramelessWidget;
@@ -21,8 +26,11 @@ public:
     explicit FramelessWidget(QWidget *parent = nullptr);
     explicit FramelessWidget(bool isMax, bool isFull=true, QWidget *parent = nullptr);
     virtual ~FramelessWidget();
+    // 重载, title, ico, layou三个函数
     void setWindowTitle(const QString &text);
     void setWindowIcon(const QIcon &ico);
+    void setLayout(QLayout *layout);
+
     void setContent(QWidget *w);
 
 private slots:
@@ -68,6 +76,134 @@ private:
     // 是否显示全屏按钮和最大化按钮
     bool m_isFull = true;
     bool m_isMax = true;
+};
+
+class CustomWarningBox : public FramelessWidget{
+    Q_OBJECT
+public:
+    explicit CustomWarningBox(QString title, QString info, QWidget *parent=nullptr) :
+        FramelessWidget(parent)
+    {
+        this->setWindowTitle(title);
+        m_pInfo = new QLabel(info);
+        m_pInfo->setStyleSheet("font-size: 24px; color: rgb(255, 170, 0);");
+        m_pInfo->setAlignment(Qt::AlignCenter);
+        QHBoxLayout *pLayout = new QHBoxLayout();
+        pLayout->addWidget(m_pInfo);
+        this->setLayout(pLayout);
+        this->setWindowModality(Qt::ApplicationModal);
+        this->resize(300, 100);
+    }
+    virtual ~CustomWarningBox(){}
+    void setInfo(QString info){
+        m_pInfo->setText(info);
+    }
+    static void customWarningBox(QString title, QString info){
+        static CustomWarningBox handle(title, info);
+        handle.setInfo(info);
+        handle.setWindowTitle(title);
+        handle.show();
+    }
+private:
+    QLabel *m_pInfo;
+};
+
+class CustomErrorBox : public FramelessWidget{
+    Q_OBJECT
+public:
+    explicit CustomErrorBox(QString title, QString info, QWidget *parent=nullptr) :
+        FramelessWidget(parent)
+    {
+        this->setWindowTitle(title);
+        m_pInfo = new QLabel(info);
+        m_pInfo->setStyleSheet("font-size: 24px; color: rgb(240, 0, 0);");
+        m_pInfo->setAlignment(Qt::AlignCenter);
+        QHBoxLayout *pLayout = new QHBoxLayout();
+        pLayout->addWidget(m_pInfo);
+        setLayout(pLayout);
+        this->setWindowModality(Qt::ApplicationModal);
+        this->resize(300, 100);
+    }
+
+    virtual ~CustomErrorBox(){}
+    void setInfo(QString info){
+        m_pInfo->setText(info);
+    }
+    static void customErrorBox(QString title, QString info){
+        static CustomErrorBox handle(title, info);
+        handle.setInfo(info);
+        handle.setWindowTitle(title);
+        handle.show();
+    }
+private:
+    QLabel *m_pInfo;
+};
+
+class CustomInfoBox : public FramelessWidget{
+    Q_OBJECT
+public:
+    explicit CustomInfoBox(QString title, QString info, QWidget *parent=nullptr) :
+        FramelessWidget(parent)
+    {
+        this->setWindowTitle(title);
+        m_pInfo = new QLabel(info);
+        m_pInfo->setStyleSheet("font-size: 24px; color: rgb(0, 0, 0);");
+        m_pInfo->setAlignment(Qt::AlignCenter);
+        QHBoxLayout *pLayout = new QHBoxLayout();
+        pLayout->addWidget(m_pInfo);
+        this->setLayout(pLayout);
+        this->setWindowModality(Qt::ApplicationModal);
+        this->resize(300, 100);
+    }
+    virtual ~CustomInfoBox(){}
+    void setInfo(QString info){
+        m_pInfo->setText(info);
+    }
+    static void customInfoBox(QString title, QString info){
+        static CustomInfoBox handle(title, info);
+        handle.setInfo(info);
+        handle.setWindowTitle(title);
+        handle.show();
+    }
+private:
+    QLabel *m_pInfo;
+};
+
+class CustomProgressbar: public FramelessWidget{
+    Q_OBJECT
+public:
+    explicit CustomProgressbar(QString title, QString info, QWidget *parent=nullptr) :
+        FramelessWidget(parent)
+    {
+        this->setWindowTitle(title);
+        pPro = new QProgressBar;
+        pInfo = new QLabel(info);
+        QHBoxLayout *pLayout = new QHBoxLayout();
+        pLayout->addWidget(pInfo);
+        pLayout->addWidget(pPro);
+        this->setLayout(pLayout);
+        this->setWindowModality(Qt::ApplicationModal);
+        this->resize(300, 80);
+    }
+    virtual ~CustomProgressbar(){}
+
+public slots:
+    void onSetValue(int value){
+        this->pPro->setValue(value);
+        if(value == this->pPro->maximum()){
+            QTimer::singleShot(500, this, &CustomProgressbar::close);
+        }
+    }
+    void onSetError(QString msg) {
+        this->pInfo->setText(msg);
+    }
+    void onSetRange(int min, int max){
+        this->onSetValue(0);
+        this->pPro->setRange(min, max);
+    }
+private:
+    QProgressBar *pPro;
+    QLabel *pInfo;
 };
 
 #endif // FRAMELESSWIDGET_H
