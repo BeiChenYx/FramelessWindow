@@ -253,6 +253,10 @@ void FramelessWidget::mousePressEvent(QMouseEvent *event) {
         m_bDragLeft = true;
         m_bDragBottom = true;
         setCursor(Qt::SizeBDiagCursor);
+    } else if(rightBorderHit(globalMousePos) && bottomBorderHit(globalMousePos)){
+        m_bDragBottom = true;
+        m_bDragRight = true;
+        setCursor(Qt::SizeFDiagCursor);
     } else {
         if (topBorderHit(globalMousePos)) {
             m_bDragTop = true;
@@ -328,7 +332,7 @@ void FramelessWidget::checkBorderDragging(QMouseEvent *event) {
             }
         } else if (m_bDragBottom && m_bDragRight) {
             int newHeight = globalMousePos.y() - m_StartGeometry.y();
-            int newWidth = globalMousePos.y() - m_StartGeometry.x();
+            int newWidth = globalMousePos.x() - m_StartGeometry.x();
             if (newHeight > this->minimumHeight() && newWidth > this->minimumWidth()) {
                 resize(newWidth, newHeight);
             }
@@ -361,6 +365,8 @@ void FramelessWidget::checkBorderDragging(QMouseEvent *event) {
             setCursor(Qt::SizeBDiagCursor);
         } else if (leftBorderHit(globalMousePos) && bottomBorderHit(globalMousePos)) {
             setCursor(Qt::SizeBDiagCursor);
+        } else if(rightBorderHit(globalMousePos) && bottomBorderHit(globalMousePos)){
+            setCursor(Qt::SizeFDiagCursor);
         } else {
             if (topBorderHit(globalMousePos)) {
                 setCursor(Qt::SizeVerCursor);
