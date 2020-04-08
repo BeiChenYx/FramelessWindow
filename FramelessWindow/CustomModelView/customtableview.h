@@ -6,6 +6,7 @@
 #include <QTableView>
 #include <QHeaderView>
 #include <QModelIndex>
+#include <QSortFilterProxyModel>
 #include <QToolButton>
 
 // 1. 先实现正常的视图/模型显示
@@ -30,6 +31,9 @@ public slots:
 private:
     QToolButton *m_pTBtnSort;
     QHeaderView *m_pHeaderView;
+    QSortFilterProxyModel *m_pSortFilterModel;
+
+    bool m_descendingOrder;
 };
 
 #endif // CUSTOMTABLE_H
