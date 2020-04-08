@@ -25,16 +25,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        CustomModelView/customlistview.cpp \
+        CustomModelView/custommodel.cpp \
+        CustomModelView/customtableview.cpp \
+        CustomModelView/customtreeview.cpp \
+        FrameLessWidget/framelesswidget.cpp \
         main.cpp \
-        framelesswidget.cpp \
         mainwindow.cpp
 
 HEADERS += \
-        framelesswidget.h \
+        CustomModelView/customlistview.h \
+        CustomModelView/custommodel.h \
+        CustomModelView/customtableview.h \
+        CustomModelView/customtreeview.h \
+        FrameLessWidget/framelesswidget.h \
         mainwindow.h
 
 FORMS += \
-        framelesswidget.ui \
+        FrameLessWidget/framelesswidget.ui \
         mainwindow.ui
 
 # Default rules for deployment.
@@ -42,8 +50,8 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-RESOURCES += \
-    images.qrc
 
 
-RC_FILE += images/window.rc
+RC_FILE += FrameLessWidget/images/window.rc
+
+RESOURCES += FrameLessWidget/images.qrc

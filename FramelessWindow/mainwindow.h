@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
+#include "CustomModelView/custommodel.h"
+#include "CustomModelView/customlistview.h"
+#include "CustomModelView/customtableview.h"
+#include "CustomModelView/customtreeview.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,6 +28,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    CustomModel m_model;
 };
 
 #endif // MAINWINDOW_H

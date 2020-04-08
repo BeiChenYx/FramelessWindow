@@ -28,6 +28,11 @@ void MainWindow::initUi()
     ui->buttonGroup_left_nav->setId(ui->toolButton_list, 2);
     ui->buttonGroup_left_nav->setId(ui->toolButton_tree, 3);
     ui->buttonGroup_left_nav->setId(ui->toolButton_custom, 4);
+
+    ui->listView->setModel(&m_model);
+    ui->tableView->setModel(&m_model);
+    ui->treeView->setModel(&m_model);
+    ui->tableView->initUi();
 }
 
 void MainWindow::initConnetion()

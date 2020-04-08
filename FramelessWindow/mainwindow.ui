@@ -263,7 +263,7 @@ QSplitter::handle:pressed {
        <widget class="QWidget" name="page_table">
         <layout class="QGridLayout" name="gridLayout_3">
          <item row="0" column="0">
-          <widget class="QTableView" name="tableView"/>
+          <widget class="CustomTableView" name="tableView"/>
          </item>
         </layout>
        </widget>
@@ -289,6 +289,13 @@ QSplitter::handle:pressed {
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CustomTableView</class>
+   <extends>QTableView</extends>
+   <header>CustomModelView\customtableview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
  <buttongroups>
