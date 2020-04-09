@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->initUi();
     this->initConnetion();
+    m_tableView.setTableView(ui->tableView, &m_model);
 }
 
 MainWindow::~MainWindow()
@@ -30,9 +31,9 @@ void MainWindow::initUi()
     ui->buttonGroup_left_nav->setId(ui->toolButton_custom, 4);
 
     ui->listView->setModel(&m_model);
-    ui->tableView->setModel(&m_model);
+//    ui->tableView->setModel(&m_model);
     ui->treeView->setModel(&m_model);
-    ui->tableView->initUi();
+//    ui->tableView->initUi();
 }
 
 void MainWindow::initConnetion()

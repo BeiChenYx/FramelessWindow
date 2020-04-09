@@ -50,3 +50,16 @@ QVariant CustomModel::headerData(int section, Qt::Orientation orientation, int r
         return QVariant(QString::number(section));
     }
 }
+bool CustomModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
+{
+    if(role != Qt::EditRole){
+        return false;
+    }
+    if(orientation == Qt::Horizontal){
+        m_names.replace(section, value.toString());
+        emit headerDataChanged(Qt::Horizontal, section, section);
+        return true;
+    }else{
+        return false;
+    }
+}

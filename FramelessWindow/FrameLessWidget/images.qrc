@@ -9,5 +9,8 @@
         <file>images/fullscreen_exit.png</file>
         <file>images/icon.png</file>
         <file>images/window.ico</file>
+        <file>images/filter.png</file>
+        <file>images/sort_down.png</file>
+        <file>images/sort_up.png</file>
     </qresource>
 </RCC>

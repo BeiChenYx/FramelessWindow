@@ -26,13 +26,15 @@ public:
     int columnCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+    bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role = Qt::EditRole);
+
 signals:
 
 public slots:
 
 private:
 // 列: code, no1, no2, no3, name, datetime
-    QStringList m_names{"code", "no1", "no2", "no3", "name", "datetime"};
+    QVector<QString> m_names{"code", "no1", "no2", "no3", "name", "datetime"};
     QList<QVector<QVariant> > m_stocks;
 };
 
