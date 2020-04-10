@@ -33,7 +33,7 @@
 	border-bottom: 8px solid #117ee0; 
 	background-image: url(:/images/6.png);
 	background-color: #237fca;
-	color: #ffffff;	
+	color: #ffffff;
 }
 #windowTitlebar QToolButton{
 	background-color:none;
@@ -73,8 +73,8 @@
 #toolButton_full_exit{
 	image: url(:/images/fullscreen_exit.png);
 }
-#label_title{
-	color: #ffffff;
+#windowTitlebar #label_title{
+	color: #ffffff;	
 	font-weight:bold;
 	font-size:16px;
 }

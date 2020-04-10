@@ -1,6 +1,7 @@
 #include <QApplication>
 #include "FrameLessWidget/framelesswidget.h"
 #include "mainwindow.h"
+#include "CustomModelView/customheaderview.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,5 +17,6 @@ int main(int argc, char *argv[])
     auto pMain = new MainWindow(&w);
     w.setContent(pMain);
     w.show();
+
     return a.exec();
 }

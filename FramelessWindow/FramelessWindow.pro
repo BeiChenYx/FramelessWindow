@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        CustomModelView/customheaderview.cpp \
         CustomModelView/customlistview.cpp \
         CustomModelView/custommodel.cpp \
         CustomModelView/customtableview.cpp \
@@ -34,6 +35,7 @@ SOURCES += \
         mainwindow.cpp
 
 HEADERS += \
+        CustomModelView/customheaderview.h \
         CustomModelView/customlistview.h \
         CustomModelView/custommodel.h \
         CustomModelView/customtableview.h \
@@ -42,6 +44,7 @@ HEADERS += \
         mainwindow.h
 
 FORMS += \
+        CustomModelView/customheaderview.ui \
         FrameLessWidget/framelesswidget.ui \
         mainwindow.ui
 
