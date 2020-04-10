@@ -1,4 +1,5 @@
 #include "custommodel.h"
+#include <ctime>
 #include <QDebug>
 
 CustomModel::CustomModel(QAbstractTableModel *parent) : QAbstractTableModel(parent)
@@ -6,7 +7,7 @@ CustomModel::CustomModel(QAbstractTableModel *parent) : QAbstractTableModel(pare
     auto now = QDateTime::currentDateTime();
     for (int i=0; i<100; ++i) {
         // typedef std::tuple<int, int, int, int, QString, QDateTime> ModeLCol;
-        m_stocks.append({i, i*100, i*200, i*300, QString("name%1").arg(i), now.addSecs(i)});
+        m_stocks.append({i, i*100, qrand() % 100, qrand() % 300, QString("name%1").arg(qrand() % 100), now.addSecs(i)});
     }
 
 }
