@@ -25,28 +25,30 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        main.cpp \
+        mainwindow.cpp\
         CustomModelView/customheaderview.cpp \
+        CustomModelView/customhorizontalheaderview.cpp \
         CustomModelView/customlistview.cpp \
         CustomModelView/custommodel.cpp \
         CustomModelView/customtableview.cpp \
         CustomModelView/customtreeview.cpp \
-        FrameLessWidget/framelesswidget.cpp \
-        main.cpp \
-        mainwindow.cpp
+        FrameLessWidget/framelesswidget.cpp
 
 HEADERS += \
+        mainwindow.h\
         CustomModelView/customheaderview.h \
+        CustomModelView/customhorizontalheaderview.h \
         CustomModelView/customlistview.h \
         CustomModelView/custommodel.h \
         CustomModelView/customtableview.h \
         CustomModelView/customtreeview.h \
-        FrameLessWidget/framelesswidget.h \
-        mainwindow.h
+        FrameLessWidget/framelesswidget.h
 
 FORMS += \
+        mainwindow.ui\
         CustomModelView/customheaderview.ui \
-        FrameLessWidget/framelesswidget.ui \
-        mainwindow.ui
+        FrameLessWidget/framelesswidget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

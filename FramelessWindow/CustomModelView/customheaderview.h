@@ -23,6 +23,7 @@ public:
     ~CustomHeaderView();
 
     void setTitle(QString text);
+    QString title();
     void setAlignment(Qt::Alignment align);
     void sortUpVisible(bool status);
     void sortDownVisible(bool status);

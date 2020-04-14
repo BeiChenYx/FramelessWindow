@@ -260,13 +260,7 @@ QSplitter::handle:pressed {
       </widget>
       <widget class="QStackedWidget" name="stackedWidget">
        <widget class="QWidget" name="page_base"/>
-       <widget class="QWidget" name="page_table">
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="0" column="0">
-          <widget class="QTableView" name="tableView"/>
-         </item>
-        </layout>
-       </widget>
+       <widget class="QWidget" name="page_table"/>
        <widget class="QWidget" name="page_list">
         <layout class="QGridLayout" name="gridLayout_4">
          <item row="0" column="0">

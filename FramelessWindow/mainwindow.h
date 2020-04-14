@@ -28,8 +28,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-
-    CustomTableView m_tableView;
+    CustomTableView *m_pCustomTableView;
     CustomModel m_model;
 };
 

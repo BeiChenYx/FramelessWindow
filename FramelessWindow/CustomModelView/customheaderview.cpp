@@ -77,6 +77,10 @@ void CustomHeaderView::setTitle(QString text)
 {
     ui->label_title->setText(text);
 }
+QString CustomHeaderView::title()
+{
+    return ui->label_title->text();
+}
 
 void CustomHeaderView::setAlignment(Qt::Alignment align)
 {
