@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        CustomModelView/customlineeditedelegate.cpp \
         main.cpp \
         mainwindow.cpp\
         CustomModelView/customheaderview.cpp \
@@ -36,6 +37,7 @@ SOURCES += \
         FrameLessWidget/framelesswidget.cpp
 
 HEADERS += \
+        CustomModelView/customlineeditedelegate.h \
         mainwindow.h\
         CustomModelView/customheaderview.h \
         CustomModelView/customhorizontalheaderview.h \

@@ -1,6 +1,7 @@
 #include <QHBoxLayout>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "CustomModelView/customlineeditedelegate.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -36,9 +37,10 @@ void MainWindow::initUi()
     m_pCustomTableView = new CustomTableView(this);
     QHBoxLayout *pHLayout = new QHBoxLayout();
     pHLayout->addWidget(m_pCustomTableView);
-    pHLayout->setMargin(0);
+    pHLayout->setMargin(9);
     ui->page_table->setLayout(pHLayout);
     m_pCustomTableView->setModel(&m_model);
+//    m_pCustomTableView->setItemDelegate(new CustomLineEditeDelegate(this));
 }
 
 void MainWindow::initConnetion()

@@ -31,7 +31,7 @@ CustomHeaderView::CustomHeaderView(int index, QWidget *parent) :
     m_pFilterDialog(new FilterDialog)
 {
     ui->setupUi(this);
-    this->setAutoFillBackground(true);
+    this->setObjectName("CustomHeaderView");
     m_pFilterDialog->hide();
     connect(ui->toolButton_sortUp, &QToolButton::clicked, this, [this](){
         ui->buttonGroup->setExclusive(true);
@@ -57,11 +57,15 @@ CustomHeaderView::CustomHeaderView(int index, QWidget *parent) :
         m_pFilterDialog->move(zero.x(), zero.y() + this->height());
         m_pFilterDialog->resize(this->size() + QSize(5, 0));
         m_pFilterDialog->show();
-//        this->filter(m_index, "");
     });
     connect(m_pFilterDialog, &FilterDialog::filter, this, [this](QString msg){
         this->filter(m_index, msg);
     });
+    ui->widget_header->installEventFilter(this);
+    ui->label_title->installEventFilter(this);
+    ui->toolButton_filter->installEventFilter(this);
+    ui->toolButton_sortUp->installEventFilter(this);
+    ui->toolButton_sortDown->installEventFilter(this);
 }
 
 CustomHeaderView::~CustomHeaderView()
@@ -109,8 +113,24 @@ void CustomHeaderView::clearStatus()
     ui->toolButton_sortUp->setChecked(false);
     ui->toolButton_sortDown->setChecked(false);
 }
+void CustomHeaderView::clearFilterStatus()
+{
+    ui->buttonGroup->setExclusive(false);
+    ui->toolButton_filter->setChecked(false);
+}
 
 QString CustomHeaderView::getFilterMsg()
 {
     return m_pFilterDialog->filterMsg();
 }
+
+bool CustomHeaderView::eventFilter(QObject *obj, QEvent *event)
+{
+    if(obj == ui->widget_header || obj == ui->label_title || obj == ui->toolButton_filter
+            || obj == ui->toolButton_sortUp || obj == ui->toolButton_sortDown){
+            setCursor(Qt::ArrowCursor);
+    }
+    return QWidget::eventFilter(obj, event);
+}
+
+

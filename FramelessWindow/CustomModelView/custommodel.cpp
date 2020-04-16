@@ -40,6 +40,21 @@ QVariant CustomModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+bool CustomModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if(!index.isValid()){
+        qDebug() << "index is valid: " << index.row() << ":" << index.column();
+        return false;
+    }
+    if(role == Qt::EditRole){
+        auto stock = m_stocks.at(index.row());
+        stock[index.column()] = value;
+        emit dataChanged(index, index);
+        return true;
+    }
+    return false;
+}
+
 QVariant CustomModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if(role != Qt::DisplayRole){

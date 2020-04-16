@@ -29,12 +29,16 @@ public:
     void sortDownVisible(bool status);
     void filterVisible(bool status);
     void clearStatus();
+    void clearFilterStatus();
     QString getFilterMsg();
 
 signals:
     void sortedUp(int index);
     void sortedDown(int index);
     void filter(int index, QString msg);
+
+protected:
+    virtual bool eventFilter(QObject *obj, QEvent *event);
 
 private:
     Ui::CustomHeaderView *ui;

@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <QItemDelegate>
 #include "CustomModelView/customtableview.h"
 
 
@@ -8,7 +9,9 @@ CustomTableView::CustomTableView(QWidget *parent)
       m_pSortFilterModel(new QSortFilterProxyModel(this))
 {
     this->initConnect();
+    this->setAlternatingRowColors(true);
     this->setHorizontalHeader(m_pHHeaderView);
+    this->setObjectName("CustomTableView");
 }
 
 void CustomTableView::initConnect()
