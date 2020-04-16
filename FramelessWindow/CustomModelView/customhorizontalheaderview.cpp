@@ -70,7 +70,7 @@ void CustomHorizontalHeaderView::handleSectionResized(int i, int oldSize, int ne
 {
     Q_UNUSED(oldSize);
     Q_UNUSED(newSize);
-    for (int j=visualIndex(i);j<count();j++) {
+    for (int j=visualIndex(i);j<m_pTableFilterList.length();j++) {
         int logical = logicalIndex(j);
         m_pTableFilterList.at(logical)->setGeometry(sectionViewportPosition(logical), 0,
                                                     sectionSize(logical) - HEADER_RIGHT_BORDER, height());
@@ -79,7 +79,7 @@ void CustomHorizontalHeaderView::handleSectionResized(int i, int oldSize, int ne
 void CustomHorizontalHeaderView::handleSectionMoved(int logical, int oldVisualIndex, int newVisualIndex)
 {
     Q_UNUSED(logical);
-    for (int i=qMin(oldVisualIndex, newVisualIndex);i<count();i++){
+    for (int i=qMin(oldVisualIndex, newVisualIndex);i<m_pTableFilterList.length();i++){
         int logical = logicalIndex(i);
         m_pTableFilterList.at(logical)->setGeometry(sectionViewportPosition(logical), 0,
                                                     sectionSize(logical) - HEADER_RIGHT_BORDER, height());
@@ -97,7 +97,7 @@ void CustomHorizontalHeaderView::resizeEvent(QResizeEvent *event)
 
 void CustomHorizontalHeaderView::fixComboPositions()
 {
-    for (int i = 0; i<count();i++){
+    for (int i = 0; i<m_pTableFilterList.length();i++){
         m_pTableFilterList.at(i)->setGeometry(sectionViewportPosition(i), 0,
                                               sectionSize(i) - HEADER_RIGHT_BORDER, height());
     }

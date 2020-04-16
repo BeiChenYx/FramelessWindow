@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
+#include <QStandardItemModel>
 #include "CustomModelView/custommodel.h"
 #include "CustomModelView/customlistview.h"
 #include "CustomModelView/customtableview.h"
@@ -30,6 +31,8 @@ private:
     Ui::MainWindow *ui;
     CustomTableView *m_pCustomTableView;
     CustomModel m_model;
+
+    QStandardItemModel *m_pStandardModel;
 };
 
 #endif // MAINWINDOW_H
