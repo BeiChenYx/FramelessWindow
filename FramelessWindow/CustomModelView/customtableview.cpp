@@ -29,6 +29,15 @@ void CustomTableView::initConnect()
         m_pSortFilterModel->setFilterKeyColumn(index);
         m_pSortFilterModel->setFilterFixedString(msg);
     });
+
+    // 设置选中行
+    this->setSelectionBehavior(QAbstractItemView::SelectRows);
+    // 设置单选
+    this->setSelectionMode(QAbstractItemView::SingleSelection);
+    // 处理鼠标选择
+    connect(this, &QTableView::pressed, this, [this](const QModelIndex &index){
+        qDebug() << "selected: " << index.row() << " data:" << this->model()->data(index).toString();
+    });
 }
 
 void CustomTableView::setModel(QAbstractItemModel *model)
