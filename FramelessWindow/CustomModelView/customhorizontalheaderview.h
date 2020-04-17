@@ -12,8 +12,7 @@ class CustomHorizontalHeaderView : public QHeaderView
     Q_OBJECT
 public:
     explicit CustomHorizontalHeaderView(QWidget *parent = nullptr);
-    ~CustomHorizontalHeaderView();
-    void fixComboPositions();
+    virtual ~CustomHorizontalHeaderView() override;
 
 signals:
     void sortedUp(int index);
@@ -23,11 +22,13 @@ signals:
 public slots:
 
 protected:
-    void showEvent(QShowEvent *e);
-    void paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const;
-    void resizeEvent(QResizeEvent *event);
+    void paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const override;
+    void resizeEvent(QResizeEvent *event) override;
     void handleSectionMoved(int logical, int oldVisualIndex, int newVisualIndex);
     void handleSectionResized(int i, int oldSize, int newSize);
+    void setModel(QAbstractItemModel *model) override;
+    void headerDataChanged(Qt::Orientation orientation, int logicalFirst, int logicalLast);
+    void fixSectionPositions();
 
 private:
     QVector<CustomHeaderView*> m_pTableFilterList;

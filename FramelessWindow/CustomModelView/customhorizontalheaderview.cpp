@@ -7,12 +7,12 @@ const int HEADER_RIGHT_BORDER = 1;
 CustomHorizontalHeaderView::CustomHorizontalHeaderView(QWidget *parent)
     : QHeaderView(Qt::Horizontal, parent)
 {
-    connect(this, &QHeaderView::sectionResized, this, &CustomHorizontalHeaderView::handleSectionResized);
-    connect(this, &QHeaderView::sectionMoved, this, &CustomHorizontalHeaderView::handleSectionMoved);
     setSectionsMovable(true);
     setSectionsClickable(true);
     this->setStretchLastSection(true);
     this->setObjectName("CustomHorizontalHeaderView");
+    connect(this, &QHeaderView::sectionResized, this, &CustomHorizontalHeaderView::handleSectionResized);
+    connect(this, &QHeaderView::sectionMoved, this, &CustomHorizontalHeaderView::handleSectionMoved);
 }
 CustomHorizontalHeaderView::~CustomHorizontalHeaderView()
 {
@@ -22,13 +22,11 @@ CustomHorizontalHeaderView::~CustomHorizontalHeaderView()
     }
 }
 
-void CustomHorizontalHeaderView::showEvent(QShowEvent *e)
+void CustomHorizontalHeaderView::setModel(QAbstractItemModel *model)
 {
-    if(!m_pTableFilterList.isEmpty()){return;}
+    QHeaderView::setModel(model);
     for (int i=0; i<count(); ++i) {
         auto pTableFilter = new CustomHeaderView(i, this);
-        pTableFilter->setGeometry(sectionViewportPosition(i), 0,
-                                  sectionSize(i) - HEADER_RIGHT_BORDER, height());
         pTableFilter->setTitle(this->model()->headerData(i, Qt::Horizontal).toString());
         pTableFilter->show();
         m_pTableFilterList.append(pTableFilter);
@@ -54,7 +52,16 @@ void CustomHorizontalHeaderView::showEvent(QShowEvent *e)
             emit this->filter(index, msg);
         });
     }
-    QHeaderView::showEvent(e);
+}
+
+void CustomHorizontalHeaderView::headerDataChanged(Qt::Orientation orientation, int logicalFirst, int logicalLast)
+{
+    if(logicalFirst < 0 || logicalLast > m_pTableFilterList.length()){return;}
+    if(orientation == Qt::Horizontal){
+        for (int i=logicalFirst; i<=logicalLast; ++i) {
+            m_pTableFilterList.at(i)->setTitle(this->model()->headerData(i, Qt::Horizontal).toString());
+        }
+    }
 }
 void CustomHorizontalHeaderView::paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const
 {
@@ -64,38 +71,38 @@ void CustomHorizontalHeaderView::paintSection(QPainter *painter, const QRect &re
     painter->save();
     QHeaderView::paintSection(painter, QRect(), logicalIndex);
     painter->restore();
+    auto pTableFilter = m_pTableFilterList.at(logicalIndex);
+    pTableFilter->setGeometry(sectionViewportPosition(logicalIndex), 0,
+                              sectionSize(logicalIndex) - HEADER_RIGHT_BORDER, height());
+    pTableFilter->show();
+    // 根据第一个可见视图索引求出逻辑索引, 在这之前的都要隐藏
+    int startShowIndex = this->visualIndexAt(0);
+    for (int i=0; i<startShowIndex; ++i) {
+        m_pTableFilterList.at(i)->hide();
+    }
 }
 
 void CustomHorizontalHeaderView::handleSectionResized(int i, int oldSize, int newSize)
 {
+    Q_UNUSED(i)
     Q_UNUSED(oldSize);
     Q_UNUSED(newSize);
-    for (int j=visualIndex(i);j<m_pTableFilterList.length();j++) {
-        int logical = logicalIndex(j);
-        m_pTableFilterList.at(logical)->setGeometry(sectionViewportPosition(logical), 0,
-                                                    sectionSize(logical) - HEADER_RIGHT_BORDER, height());
-    }
+    this->fixSectionPositions();
 }
 void CustomHorizontalHeaderView::handleSectionMoved(int logical, int oldVisualIndex, int newVisualIndex)
 {
     Q_UNUSED(logical);
-    for (int i=qMin(oldVisualIndex, newVisualIndex);i<m_pTableFilterList.length();i++){
-        int logical = logicalIndex(i);
-        m_pTableFilterList.at(logical)->setGeometry(sectionViewportPosition(logical), 0,
-                                                    sectionSize(logical) - HEADER_RIGHT_BORDER, height());
-    }
+    Q_UNUSED(oldVisualIndex);
+    Q_UNUSED(newVisualIndex);
+    this->fixSectionPositions();
 }
 void CustomHorizontalHeaderView::resizeEvent(QResizeEvent *event)
 {
     QHeaderView::resizeEvent(event);
-    for (int i=0;i<m_pTableFilterList.length();i++){
-        int logical = logicalIndex(i);
-        m_pTableFilterList.at(logical)->setGeometry(sectionViewportPosition(logical), 0,
-                                                    sectionSize(logical) - HEADER_RIGHT_BORDER, height());
-    }
+    this->fixSectionPositions();
 }
 
-void CustomHorizontalHeaderView::fixComboPositions()
+void CustomHorizontalHeaderView::fixSectionPositions()
 {
     for (int i = 0; i<m_pTableFilterList.length();i++){
         m_pTableFilterList.at(i)->setGeometry(sectionViewportPosition(i), 0,

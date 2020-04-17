@@ -31,14 +31,6 @@ void CustomTableView::initConnect()
     });
 }
 
-void CustomTableView::scrollContentsBy(int dx, int dy)
-{
-    QTableView::scrollContentsBy(dx, dy);
-    if (dx != 0){
-        m_pHHeaderView->fixComboPositions();
-    }
-}
-
 void CustomTableView::setModel(QAbstractItemModel *model)
 {
     m_pSortFilterModel->setSourceModel(model);

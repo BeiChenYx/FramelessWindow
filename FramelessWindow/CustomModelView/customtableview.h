@@ -23,7 +23,6 @@ class CustomTableView : public QTableView
 public:
     explicit CustomTableView(QWidget *parent = nullptr);
     void setModel(QAbstractItemModel *model) override;
-    void scrollContentsBy(int dx, int dy) override;
 
 private:
     void initConnect();
@@ -31,7 +30,6 @@ private:
 private:
     CustomHorizontalHeaderView *m_pHHeaderView;
     QSortFilterProxyModel *m_pSortFilterModel;
-    QVector<CustomHeaderView*> m_pTableFilterList;
 };
 
 #endif // CUSTOMTABLE_H

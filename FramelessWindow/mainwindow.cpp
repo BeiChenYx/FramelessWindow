@@ -40,22 +40,7 @@ void MainWindow::initUi()
     pHLayout->setMargin(9);
     ui->page_table->setLayout(pHLayout);
     m_pCustomTableView->setModel(&m_model);
-//    m_pCustomTableView->setItemDelegate(new CustomLineEditeDelegate(this));
-
-//    m_pStandardModel = new QStandardItemModel;
-//    QStringList headers;
-//    headers << "姓名" << "所属班级";
-//    m_pStandardModel->setHorizontalHeaderLabels(headers);
-//    for(int i=0; i<10; ++i){
-//        QStandardItem* itemName = new QStandardItem(QString::number(i));
-//        QStandardItem* itemStudentClass = new QStandardItem(QString::number(i * 100));
-//        QList<QStandardItem*> itemList;
-//        itemList << itemName << itemStudentClass;
-//        m_pStandardModel->appendRow(itemList);
-//    }
-//    m_pCustomTableView->setModel(m_pStandardModel);
-//    ui->listView->setModel(m_pStandardModel);
-//    ui->treeView->setModel(m_pStandardModel);
+    m_pCustomTableView->setColumnWidth(1, 150);
 }
 
 void MainWindow::initConnetion()
