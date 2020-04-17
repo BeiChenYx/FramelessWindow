@@ -1,4 +1,5 @@
 #include <QDesktopWidget>
+#include <QTranslator>
 #include <QGraphicsDropShadowEffect>
 #include <QScreen>
 #include "framelesswidget.h"
@@ -43,6 +44,10 @@ FramelessWidget::FramelessWidget(QWidget *parent) :
                      &FramelessWidget::on_applicationStateChanged);
     setMouseTracking(true);
     this->setWindowIcon(QIcon(":/images/icon.png"));
+    //  处理默认菜单的英文
+//    QTranslator translator;
+//    translator.load(QString(":/images/qt_zh_CN.qm"));
+//    QApplication::installTranslator(&translator);
     QApplication::instance()->installEventFilter(this);
 }
 

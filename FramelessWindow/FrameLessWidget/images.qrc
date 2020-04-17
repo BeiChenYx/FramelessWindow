@@ -12,5 +12,6 @@
         <file>images/filter.png</file>
         <file>images/sort_down.png</file>
         <file>images/sort_up.png</file>
+        <file>images/qt_zh_CN.qm</file>
     </qresource>
 </RCC>

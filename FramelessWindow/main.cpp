@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QTranslator>
 #include "FrameLessWidget/framelesswidget.h"
 #include "mainwindow.h"
 #include "CustomModelView/customheaderview.h"
@@ -6,6 +7,12 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    //  处理默认菜单的英文
+    QTranslator translator;
+    translator.load(QString(":/images/qt_zh_CN.qm"));
+    QApplication::installTranslator(&translator);
+
     // 显示最大化和全屏
     FramelessWidget w;
     // 隐藏最大化和全屏
