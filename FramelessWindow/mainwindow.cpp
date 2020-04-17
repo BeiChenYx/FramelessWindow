@@ -41,12 +41,95 @@ void MainWindow::initUi()
     ui->page_table->setLayout(pHLayout);
     m_pCustomTableView->setModel(&m_model);
     m_pCustomTableView->setColumnWidth(1, 150);
+
+    // 初始化菜单
+    m_pToListView = new QAction(tr("转到ListView"), this);
+    m_pToTreeView = new QAction(tr("转到TreeView"), this);
+    m_pToTableView = new QAction(tr("转到TableView"), this);
+    m_pViewMenu = new QMenu(this);
+    m_pViewMenu->addAction(m_pToListView);
+    m_pViewMenu->addAction(m_pToTreeView);
+    m_pViewMenu->addAction(m_pToTableView);
+    m_pCustomTableView->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->listView->setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
 void MainWindow::initConnetion()
 {
     connect(ui->buttonGroup_left_nav, SIGNAL(buttonClicked(QAbstractButton *)),
                     this, SLOT(on_buttonClickedLeftNav(QAbstractButton *)));
+
+    connect(m_pCustomTableView, &CustomTableView::customContextMenuRequested, this, [this](const QPoint &){
+        m_pToTableView->setEnabled(false);
+        m_pToListView->setEnabled(true);
+        m_pToTreeView->setEnabled(true);
+        m_pViewMenu->exec(QCursor::pos());
+    });
+    connect(ui->listView, &QListView::customContextMenuRequested, this, [this](const QPoint &){
+        m_pToTableView->setEnabled(true);
+        m_pToListView->setEnabled(false);
+        m_pToTreeView->setEnabled(true);
+        m_pViewMenu->exec(QCursor::pos());
+    });
+    connect(ui->treeView, &QTreeView::customContextMenuRequested, this, [this](const QPoint &){
+        m_pToTableView->setEnabled(true);
+        m_pToListView->setEnabled(true);
+        m_pToTreeView->setEnabled(false);
+        m_pViewMenu->exec(QCursor::pos());
+    });
+    auto whoView = [this]() -> QString{
+        auto view = qApp->focusWidget();
+        if(ui->listView == dynamic_cast<QListView*>(view)){
+            return "QListView";
+        }else if(ui->treeView == dynamic_cast<QTreeView*>(view)){
+            return "QTreeView";
+        }else if(m_pCustomTableView == dynamic_cast<CustomTableView*>(view)){
+            return "CustomTableView";
+        }else{ return ""; }
+    };
+    connect(m_pToListView, &QAction::triggered, this, [this, whoView](){
+        auto who = whoView();
+        qDebug() << who;
+        ui->toolButton_list->click();
+        if(who == "CustomTableView"){
+            int row = m_pCustomTableView->currentIndex().row();
+            auto index = ui->listView->model()->index(row, 0);
+            ui->listView->setCurrentIndex(index);
+        }else if(who == "QTreeView"){
+            int row = ui->treeView->currentIndex().row();
+            auto index = ui->listView->model()->index(row, 0);
+            ui->listView->setCurrentIndex(index);
+        }
+    });
+    connect(m_pToTreeView, &QAction::triggered, this, [this, whoView](){
+        auto who = whoView();
+        qDebug() << who;
+        ui->toolButton_tree->click();
+        if(who == "CustomTableView"){
+            int row = m_pCustomTableView->currentIndex().row();
+            auto index = ui->treeView->model()->index(row, 0);
+            ui->treeView->setCurrentIndex(index);
+        }else if(who == "QListView"){
+            int row = ui->listView->currentIndex().row();
+            auto index = ui->treeView->model()->index(row, 0);
+            ui->treeView->setCurrentIndex(index);
+        }
+    });
+    connect(m_pToTableView, &QAction::triggered, this, [this, whoView](){
+        auto who = whoView();
+        qDebug() << who;
+        ui->toolButton_table->click();
+        if(who == "QTreeView"){
+            int row = ui->treeView->currentIndex().row();
+            auto index = m_pCustomTableView->model()->index(row, 0);
+            m_pCustomTableView->setCurrentIndex(index);
+        }else if(who == "QListView"){
+            int row = ui->listView->currentIndex().row();
+            auto index = m_pCustomTableView->model()->index(row, 0);
+            m_pCustomTableView->setCurrentIndex(index);
+        }
+    });
 }
 
 void MainWindow::on_buttonClickedLeftNav(QAbstractButton *btn)

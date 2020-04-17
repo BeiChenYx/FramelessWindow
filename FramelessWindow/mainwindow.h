@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QtWidgets>
 #include <QStandardItemModel>
+#include <QMenu>
+#include <QAction>
 #include "CustomModelView/custommodel.h"
 #include "CustomModelView/customlistview.h"
 #include "CustomModelView/customtableview.h"
@@ -32,7 +34,11 @@ private:
     CustomTableView *m_pCustomTableView;
     CustomModel m_model;
 
-    QStandardItemModel *m_pStandardModel;
+    // 菜单跳转
+    QAction *m_pToListView;
+    QAction *m_pToTreeView;
+    QAction *m_pToTableView;
+    QMenu *m_pViewMenu;
 };
 
 #endif // MAINWINDOW_H

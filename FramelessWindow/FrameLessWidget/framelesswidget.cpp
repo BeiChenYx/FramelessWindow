@@ -44,10 +44,6 @@ FramelessWidget::FramelessWidget(QWidget *parent) :
                      &FramelessWidget::on_applicationStateChanged);
     setMouseTracking(true);
     this->setWindowIcon(QIcon(":/images/icon.png"));
-    //  处理默认菜单的英文
-//    QTranslator translator;
-//    translator.load(QString(":/images/qt_zh_CN.qm"));
-//    QApplication::installTranslator(&translator);
     QApplication::instance()->installEventFilter(this);
 }
 
@@ -64,6 +60,8 @@ void FramelessWidget::setWindowTitle(const QString &text)
 void FramelessWidget::setWindowIcon(const QIcon &ico)
 {
     ui->label_icon->setPixmap(ico.pixmap(24, 24));
+    // 能改变窗口任务栏的图标
+//    QWidget::setWindowIcon(ico);
 }
 void FramelessWidget::setContent(QWidget *w)
 {
