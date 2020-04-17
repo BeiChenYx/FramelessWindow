@@ -2,7 +2,7 @@
 #include <ctime>
 #include <QDebug>
 
-CustomModel::CustomModel(QAbstractTableModel *parent) : QAbstractTableModel(parent)
+CustomModel::CustomModel(QAbstractItemModel *parent) : QAbstractItemModel(parent)
 {
     auto now = QDateTime::currentDateTime();
     for (int i=0; i<100; ++i) {
@@ -36,6 +36,9 @@ QVariant CustomModel::data(const QModelIndex &index, int role) const
     if(role == Qt::DisplayRole){
         auto stock = m_stocks.at(index.row());
         return (index.column() > stock.length() || index.column() < 0) ? QVariant() : stock.at(index.column());
+    } else if(role == Qt::EditRole){
+        auto stock = m_stocks.at(index.row());
+        return (index.column() > stock.length() || index.column() < 0) ? QVariant() : stock.at(index.column());
     }
     return QVariant();
 }
@@ -60,7 +63,9 @@ QVariant CustomModel::headerData(int section, Qt::Orientation orientation, int r
     if(role != Qt::DisplayRole){
         return QVariant();
     }
+
     if(orientation == Qt::Horizontal){
+        if(section < 0 || section > m_names.length()){return  QVariant();}
         return QVariant(m_names.at(section));
     }else {
         return QVariant(QString::number(section));
@@ -78,4 +83,27 @@ bool CustomModel::setHeaderData(int section, Qt::Orientation orientation, const 
     }else{
         return false;
     }
+}
+
+Qt::ItemFlags CustomModel::flags(const QModelIndex &index) const
+{
+    if(index.isValid()){
+         Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemNeverHasChildren | Qt::ItemIsEditable;
+         return flags;
+    }
+    return QAbstractItemModel::flags(index);
+}
+
+QModelIndex CustomModel::index(int row, int column, const QModelIndex &parent) const
+{
+    if (row < 0 || column < 0 || column >= columnCount(parent) || column > m_names.length())
+        return QModelIndex();
+
+    return createIndex(row,column);
+}
+
+QModelIndex CustomModel::parent(const QModelIndex &child) const
+{
+    Q_UNUSED(child);
+    return QModelIndex();
 }

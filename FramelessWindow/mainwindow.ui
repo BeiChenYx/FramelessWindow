@@ -69,13 +69,7 @@ QSplitter::handle:pressed {
 	padding-right:5px;
 	color: rgb(255, 255, 255);
 }
-#CustomHorizontalHeaderView::section:vertical {
-	background-color:rgb(230, 230, 230);	
-	border: none;
-	padding-left:5px;
-	padding-right:5px;
-	color: rgb(66, 64, 67);
-}
+
 #CustomHorizontalHeaderView::section:!last{
 	border-right: 1px solid rgb(230, 230, 230);
 }
@@ -110,13 +104,7 @@ QSplitter::handle:pressed {
 #CustomHeaderView #widget_header QToolButton:checked{
 	background-color: #C2C2C2;
 }
-#CustomHeaderView QHeaderView::section:vertical {
-    background-color:rgb(230, 230, 230);
-    border: none;
-    padding-left:5px;
-    padding-right:5px;
-	color: rgb(66, 64, 67);
-}</string>
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
