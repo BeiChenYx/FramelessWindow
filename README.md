@@ -1,6 +1,11 @@
 # FramelessWindow
 Qt Frameless Widget; 基于Qt框架的自定义窗口框架; 参考[Qt-Frameless-Window-DarkStyle](https://github.com/Jorgen-VikingGod/Qt-Frameless-Window-DarkStyle)
 
+## 演示效果
+
+
+![home](https://github.com/BeiChenYx/FramelessWindow/blob/master/doc/home.png)
+
 ![images](https://github.com/BeiChenYx/FramelessWindow/blob/master/doc/chart.gif)
 
 修复Qt-Frameless-Window-DarkStyle Bug, 及更改的内容：
