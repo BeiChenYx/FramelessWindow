@@ -1,7 +1,7 @@
 # FramelessWindow
 Qt Frameless Widget; 基于Qt框架的自定义窗口框架; 参考[Qt-Frameless-Window-DarkStyle](https://github.com/Jorgen-VikingGod/Qt-Frameless-Window-DarkStyle)
 
-[演示](./doc/chart.gif)
+![images](https://github.com/BeiChenYx/FramelessWindow/blob/master/doc/chart.gif)
 
 修复Qt-Frameless-Window-DarkStyle Bug, 及更改的内容：
 1. 增加了Qt5的支持;
@@ -9,7 +9,7 @@ Qt Frameless Widget; 基于Qt框架的自定义窗口框架; 参考[Qt-Frameless
 3. 简化了一部分代码;
 4. 去除了虚拟桌面，多桌面的支持;
 5. 增加了全屏窗口的支持;
-6. 增加了自定义QHeaderView;
+6. 增加了自定义QHeaderView功能，实现在表头增加过来和排序;
 
 
 
