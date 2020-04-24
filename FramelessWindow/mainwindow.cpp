@@ -1,11 +1,17 @@
 #include <QHBoxLayout>
+#include <QFrame>
+#include <QHBoxLayout>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "CustomModelView/customlineeditedelegate.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_pBtnGroupLeftNav(new QButtonGroup(this)),
+    m_pCustomTableView(new CustomTableView()),
+    m_pListView(new QListView()),
+    m_pTreeView(new QTreeView())
 {
     ui->setupUi(this);
     this->initUi();
@@ -25,20 +31,33 @@ void MainWindow::initUi()
     ui->splitter->setStretchFactor(0, 1);
     ui->splitter->setStretchFactor(1, 9);
 
-    ui->buttonGroup_left_nav->setId(ui->toolButton_base, 0);
-    ui->buttonGroup_left_nav->setId(ui->toolButton_table, 1);
-    ui->buttonGroup_left_nav->setId(ui->toolButton_list, 2);
-    ui->buttonGroup_left_nav->setId(ui->toolButton_tree, 3);
-    ui->buttonGroup_left_nav->setId(ui->toolButton_custom, 4);
+    this->addNavStackWidget("", tr("基本组件"), new QWidget(this));
+    this->addNavHLine();
 
-    ui->listView->setModel(&m_model);
-    ui->treeView->setModel(&m_model);
+    auto tableWidget = new QWidget(this);
+    tableWidget->setLayout(new QHBoxLayout);
+    tableWidget->layout()->addWidget(m_pCustomTableView);
+    tableWidget->setObjectName("tableWidget");
+    this->addNavStackWidget("tableBtn", "tableView", tableWidget);
 
-    m_pCustomTableView = new CustomTableView(this);
-    QHBoxLayout *pHLayout = new QHBoxLayout();
-    pHLayout->addWidget(m_pCustomTableView);
-    pHLayout->setMargin(9);
-    ui->page_table->setLayout(pHLayout);
+    auto listWidget = new QWidget(this);
+    listWidget->setLayout(new QHBoxLayout);
+    listWidget->layout()->addWidget(m_pListView);
+    listWidget->setObjectName("listWidget");
+    this->addNavStackWidget("listBtn", "listView", listWidget);
+
+    auto treeWidget = new QWidget(this);
+    treeWidget->setLayout(new QHBoxLayout);
+    treeWidget->layout()->addWidget(m_pTreeView);
+    treeWidget->setObjectName("treeWidget");
+    this->addNavStackWidget("treeBtn", "treeView", treeWidget);
+
+    this->addNavHLine();
+    this->addNavStackWidget("", tr("自绘控件"), new QWidget(this));
+
+    m_pListView->setModel(&m_model);
+    m_pTreeView->setModel(&m_model);
+
     m_pCustomTableView->setModel(&m_model);
     m_pCustomTableView->setColumnWidth(1, 150);
 
@@ -50,14 +69,17 @@ void MainWindow::initUi()
     m_pViewMenu->addAction(m_pToListView);
     m_pViewMenu->addAction(m_pToTreeView);
     m_pViewMenu->addAction(m_pToTableView);
+    m_viewBtnMap[m_pToTableView] = "tableBtn";
+    m_viewBtnMap[m_pToListView] = "listBtn";
+    m_viewBtnMap[m_pToTreeView] = "treeBtn";
     m_pCustomTableView->setContextMenuPolicy(Qt::CustomContextMenu);
-    ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
-    ui->listView->setContextMenuPolicy(Qt::CustomContextMenu);
+    m_pTreeView->setContextMenuPolicy(Qt::CustomContextMenu);
+    m_pListView->setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
 void MainWindow::initConnetion()
 {
-    connect(ui->buttonGroup_left_nav, SIGNAL(buttonClicked(QAbstractButton *)),
+    connect(m_pBtnGroupLeftNav, SIGNAL(buttonClicked(QAbstractButton *)),
                     this, SLOT(on_buttonClickedLeftNav(QAbstractButton *)));
 
     connect(m_pCustomTableView, &CustomTableView::customContextMenuRequested, this, [this](const QPoint &){
@@ -66,66 +88,59 @@ void MainWindow::initConnetion()
         m_pToTreeView->setEnabled(true);
         m_pViewMenu->exec(QCursor::pos());
     });
-    connect(ui->listView, &QListView::customContextMenuRequested, this, [this](const QPoint &){
+    connect(m_pListView, &QListView::customContextMenuRequested, this, [this](const QPoint &){
         m_pToTableView->setEnabled(true);
         m_pToListView->setEnabled(false);
         m_pToTreeView->setEnabled(true);
         m_pViewMenu->exec(QCursor::pos());
     });
-    connect(ui->treeView, &QTreeView::customContextMenuRequested, this, [this](const QPoint &){
+    connect(m_pTreeView, &QTreeView::customContextMenuRequested, this, [this](const QPoint &){
         m_pToTableView->setEnabled(true);
         m_pToListView->setEnabled(true);
         m_pToTreeView->setEnabled(false);
         m_pViewMenu->exec(QCursor::pos());
     });
-    auto whoView = [this]() -> QString{
+    connect(m_pToListView, &QAction::triggered, this, [this](){
         auto view = qApp->focusWidget();
-        if(ui->listView == dynamic_cast<QListView*>(view)){
-            return "QListView";
-        }else if(ui->treeView == dynamic_cast<QTreeView*>(view)){
-            return "QTreeView";
-        }else if(m_pCustomTableView == dynamic_cast<CustomTableView*>(view)){
-            return "CustomTableView";
-        }else{ return ""; }
-    };
-    connect(m_pToListView, &QAction::triggered, this, [this, whoView](){
-        auto who = whoView();
-        qDebug() << who;
-        ui->toolButton_list->click();
-        if(who == "CustomTableView"){
+        auto who = m_viewBtnMap.value(m_pToListView, "");
+        auto btn = findChild<QToolButton*>(who);
+        btn->click();
+        if(view == m_pCustomTableView){
             int row = m_pCustomTableView->currentIndex().row();
-            auto index = ui->listView->model()->index(row, 0);
-            ui->listView->setCurrentIndex(index);
-        }else if(who == "QTreeView"){
-            int row = ui->treeView->currentIndex().row();
-            auto index = ui->listView->model()->index(row, 0);
-            ui->listView->setCurrentIndex(index);
+            auto index = m_pListView->model()->index(row, 0);
+            m_pListView->setCurrentIndex(index);
+        }else if(view == m_pTreeView){
+            int row = m_pTreeView->currentIndex().row();
+            auto index = m_pListView->model()->index(row, 0);
+            m_pListView->setCurrentIndex(index);
         }
     });
-    connect(m_pToTreeView, &QAction::triggered, this, [this, whoView](){
-        auto who = whoView();
-        qDebug() << who;
-        ui->toolButton_tree->click();
-        if(who == "CustomTableView"){
+    connect(m_pToTreeView, &QAction::triggered, this, [this](){
+        auto view = qApp->focusWidget();
+        auto who = m_viewBtnMap.value(m_pToTreeView, "");
+        auto btn = findChild<QToolButton*>(who);
+        btn->click();
+        if(view == m_pCustomTableView){
             int row = m_pCustomTableView->currentIndex().row();
-            auto index = ui->treeView->model()->index(row, 0);
-            ui->treeView->setCurrentIndex(index);
-        }else if(who == "QListView"){
-            int row = ui->listView->currentIndex().row();
-            auto index = ui->treeView->model()->index(row, 0);
-            ui->treeView->setCurrentIndex(index);
+            auto index = m_pTreeView->model()->index(row, 0);
+            m_pTreeView->setCurrentIndex(index);
+        }else if(view == m_pListView){
+            int row = m_pListView->currentIndex().row();
+            auto index = m_pTreeView->model()->index(row, 0);
+            m_pTreeView->setCurrentIndex(index);
         }
     });
-    connect(m_pToTableView, &QAction::triggered, this, [this, whoView](){
-        auto who = whoView();
-        qDebug() << who;
-        ui->toolButton_table->click();
-        if(who == "QTreeView"){
-            int row = ui->treeView->currentIndex().row();
+    connect(m_pToTableView, &QAction::triggered, this, [this](){
+        auto view = qApp->focusWidget();
+        auto who = m_viewBtnMap.value(m_pToTableView, "");
+        auto btn = findChild<QToolButton*>(who);
+        btn->click();
+        if(view == m_pTreeView){
+            int row = m_pTreeView->currentIndex().row();
             auto index = m_pCustomTableView->model()->index(row, 0);
             m_pCustomTableView->setCurrentIndex(index);
-        }else if(who == "QListView"){
-            int row = ui->listView->currentIndex().row();
+        }else if(view == m_pListView){
+            int row = m_pListView->currentIndex().row();
             auto index = m_pCustomTableView->model()->index(row, 0);
             m_pCustomTableView->setCurrentIndex(index);
         }
@@ -134,7 +149,35 @@ void MainWindow::initConnetion()
 
 void MainWindow::on_buttonClickedLeftNav(QAbstractButton *btn)
 {
-    ui->stackedWidget->setCurrentIndex(ui->buttonGroup_left_nav->id(btn));
+    ui->stackedWidget->setCurrentIndex(m_pBtnGroupLeftNav->id(btn));
     QToolButton *obj = qobject_cast<QToolButton*>(btn);
     obj->setChecked(true);
+}
+
+void MainWindow::addNavStackWidget(QString name, QString text, QWidget *widget)
+{
+    int btnId = m_pTBtnLeftNavVector.length();
+    auto pTBtn = new QToolButton(this);
+    m_pTBtnLeftNavVector.append(pTBtn);
+    pTBtn->setText(text);
+    pTBtn->setToolButtonStyle(Qt::ToolButtonTextOnly);
+    pTBtn->setCheckable(true);
+    pTBtn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    if(!name.trimmed().isEmpty()){
+        pTBtn->setObjectName(name);
+    }
+    m_pBtnGroupLeftNav->addButton(pTBtn, btnId);
+    ui->verticalLayout_left_nav->addWidget(pTBtn);
+    ui->stackedWidget->addWidget(widget);
+}
+
+void MainWindow::addNavHLine()
+{
+    QFrame *line = new QFrame(this);
+    line->setGeometry(QRect(40, 180, 400, 3));
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Sunken);
+    line->raise();
+    line->setObjectName("HLine");
+    ui->verticalLayout_left_nav->addWidget(line);
 }

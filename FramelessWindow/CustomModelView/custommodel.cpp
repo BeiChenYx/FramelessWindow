@@ -1,15 +1,22 @@
 #include "custommodel.h"
 #include <ctime>
+#include <algorithm>
 #include <QDebug>
 
 CustomModel::CustomModel(QAbstractItemModel *parent) : QAbstractItemModel(parent)
 {
+//    std::list<int> intList;
     auto now = QDateTime::currentDateTime();
-    for (int i=0; i<100; ++i) {
+    for (int i=0; i<10; ++i) {
         // typedef std::tuple<int, int, int, int, QString, QDateTime> ModeLCol;
         m_stocks.append({i, i*100, qrand() % 100, qrand() % 300, QString("name%1").arg(qrand() % 100), now.addSecs(i)});
+//        auto item = qrand() % 100;
+//        intList.push_back(item);
+//        qDebug() << item;
     }
-
+//    auto listMin = std::min_element(intList.begin(), intList.end());
+//    auto listMax = std::max_element(intList.begin(), intList.end());
+//    qDebug() << *listMin << " : " << *listMax;
 }
 
 int CustomModel::rowCount(const QModelIndex &parent) const

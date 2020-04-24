@@ -31,7 +31,7 @@ CustomHeaderView::CustomHeaderView(int index, QWidget *parent) :
     m_pFilterDialog(new FilterDialog)
 {
     ui->setupUi(this);
-    ui->toolButton_filter->setVisible(true);
+    ui->toolButton_filter->setVisible(false);
     ui->toolButton_sortUp->setVisible(false);
     ui->toolButton_sortDown->setVisible(false);
     this->setObjectName("CustomHeaderView");
@@ -133,12 +133,14 @@ bool CustomHeaderView::eventFilter(QObject *obj, QEvent *event)
             || obj == ui->toolButton_sortUp || obj == ui->toolButton_sortDown){
             setCursor(Qt::ArrowCursor);
     }
-    if(event->type() == QEvent::Leave){
-//        ui->toolButton_filter->setVisible(false);
+    if(event->type() == QEvent::Leave && obj == ui->widget_header){
+        qDebug() << "Leave, header object name: " << obj->objectName();
+        ui->toolButton_filter->setVisible(false);
         ui->toolButton_sortUp->setVisible(false);
         ui->toolButton_sortDown->setVisible(false);
-    }else if(event->type() == QEvent::Enter){
-//        ui->toolButton_filter->setVisible(true);
+    }else if(event->type() == QEvent::Enter && obj == ui->widget_header){
+        qDebug() << "Enter, header object name: " << obj->objectName();
+        ui->toolButton_filter->setVisible(true);
         ui->toolButton_sortUp->setVisible(true);
         ui->toolButton_sortDown->setVisible(true);
     }
