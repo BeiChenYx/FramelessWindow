@@ -9,13 +9,16 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     m_pBtnGroupLeftNav(new QButtonGroup(this)),
+    m_pVersionWidget(new VersionInfoWidget("版本号: V1.0.0")),
     m_pCustomTableView(new CustomTableView()),
     m_pListView(new QListView()),
     m_pTreeView(new QTreeView())
 {
+    // 框架   --start
     ui->setupUi(this);
     this->initUi();
     this->initConnetion();
+    // 框架   --end
 }
 
 MainWindow::~MainWindow()
@@ -25,12 +28,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::initUi()
 {
+    // 框架   --start
     // 初始侧边导航为100px, 导航和内容的比例为 1 : 9
     QList<int> splitterList{100, this->width() - 108};
     ui->splitter->setSizes(splitterList);
     ui->splitter->setStretchFactor(0, 1);
     ui->splitter->setStretchFactor(1, 9);
+    ui->statusbar->addPermanentWidget(m_pVersionWidget);
+    // 框架   --end
 
+    // 测试 --start
     this->addNavStackWidget("", tr("基本组件"), new QWidget(this));
     this->addNavHLine();
 
@@ -53,7 +60,7 @@ void MainWindow::initUi()
     this->addNavStackWidget("treeBtn", "treeView", treeWidget);
 
     this->addNavHLine();
-    this->addNavStackWidget("", tr("自绘控件"), new QWidget(this));
+    this->addNavStackWidget("", tr("自绘"), new QWidget(this), QIcon(":/images/filter.png"));
 
     m_pListView->setModel(&m_model);
     m_pTreeView->setModel(&m_model);
@@ -75,13 +82,17 @@ void MainWindow::initUi()
     m_pCustomTableView->setContextMenuPolicy(Qt::CustomContextMenu);
     m_pTreeView->setContextMenuPolicy(Qt::CustomContextMenu);
     m_pListView->setContextMenuPolicy(Qt::CustomContextMenu);
+    // 测试 --end
 }
 
 void MainWindow::initConnetion()
 {
+    // 框架   --start
     connect(m_pBtnGroupLeftNav, SIGNAL(buttonClicked(QAbstractButton *)),
                     this, SLOT(on_buttonClickedLeftNav(QAbstractButton *)));
+    // 框架   --end
 
+    // 测试 --start
     connect(m_pCustomTableView, &CustomTableView::customContextMenuRequested, this, [this](const QPoint &){
         m_pToTableView->setEnabled(false);
         m_pToListView->setEnabled(true);
@@ -145,6 +156,7 @@ void MainWindow::initConnetion()
             m_pCustomTableView->setCurrentIndex(index);
         }
     });
+    // 测试 --end
 }
 
 void MainWindow::on_buttonClickedLeftNav(QAbstractButton *btn)
@@ -154,17 +166,23 @@ void MainWindow::on_buttonClickedLeftNav(QAbstractButton *btn)
     obj->setChecked(true);
 }
 
-void MainWindow::addNavStackWidget(QString name, QString text, QWidget *widget)
+void MainWindow::addNavStackWidget(QString objectName, QString text, QWidget *widget, QIcon ico)
 {
     int btnId = m_pTBtnLeftNavVector.length();
     auto pTBtn = new QToolButton(this);
     m_pTBtnLeftNavVector.append(pTBtn);
     pTBtn->setText(text);
-    pTBtn->setToolButtonStyle(Qt::ToolButtonTextOnly);
     pTBtn->setCheckable(true);
     pTBtn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    if(!name.trimmed().isEmpty()){
-        pTBtn->setObjectName(name);
+    if(!objectName.trimmed().isEmpty()){
+        pTBtn->setObjectName(objectName);
+    }
+    if(!ico.isNull()){
+        pTBtn->setIcon(ico);
+        pTBtn->setIconSize(QSize(16, 16));
+        pTBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    }else{
+        pTBtn->setToolButtonStyle(Qt::ToolButtonTextOnly);
     }
     m_pBtnGroupLeftNav->addButton(pTBtn, btnId);
     ui->verticalLayout_left_nav->addWidget(pTBtn);
