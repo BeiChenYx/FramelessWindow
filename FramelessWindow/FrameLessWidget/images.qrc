@@ -19,5 +19,7 @@
         <file>images/checkbox--checked.png</file>
         <file>images/radio-button.png</file>
         <file>images/radio-button--checked.png</file>
+        <file>images/checkbox_dis.png</file>
+        <file>images/radio-button_dis.png</file>
     </qresource>
 </RCC>

@@ -261,13 +261,19 @@ QCheckBox::indicator:checked:pressed,
 QCheckBox::indicator:unchecked:pressed {
     background-color: rgba(23, 127, 216, 0.1);
 }
-
 QRadioButton::indicator:unchecked{
 	image: url(:/images/radio-button.png);
 }
 QRadioButton::indicator:checked{
 	image: url(:/images/radio-button--checked.png);
 }
+QRadioButton::indicator:disabled{
+	image: url(:/images/radio-button_dis.png);
+}
+QCheckBox::indicator:disabled{
+	image: url(:/images/checkbox_dis.png);
+}
+
 QScrollBar{
 	border:none;
     background-color: #DCDCDC;
