@@ -26,6 +26,7 @@ CONFIG += c++11
 
 SOURCES += \
         CustomModelView/customlineeditedelegate.cpp \
+        basicwidget.cpp \
         main.cpp \
         mainwindow.cpp\
         CustomModelView/customheaderview.cpp \
@@ -38,6 +39,7 @@ SOURCES += \
 
 HEADERS += \
         CustomModelView/customlineeditedelegate.h \
+        basicwidget.h \
         mainwindow.h\
         CustomModelView/customheaderview.h \
         CustomModelView/customhorizontalheaderview.h \
@@ -48,6 +50,7 @@ HEADERS += \
         FrameLessWidget/framelesswidget.h
 
 FORMS += \
+        basicwidget.ui \
         mainwindow.ui\
         CustomModelView/customheaderview.ui \
         FrameLessWidget/framelesswidget.ui

@@ -12,6 +12,7 @@
 #include "CustomModelView/customlistview.h"
 #include "CustomModelView/customtableview.h"
 #include "CustomModelView/customtreeview.h"
+#include "basicwidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -80,6 +81,8 @@ private:
     QAction *m_pToTableView;
     QMenu *m_pViewMenu;
     QMap<QAction*, QString> m_viewBtnMap;
+
+    BasicWidget *m_pBasicWidget;
 };
 
 #endif // MAINWINDOW_H

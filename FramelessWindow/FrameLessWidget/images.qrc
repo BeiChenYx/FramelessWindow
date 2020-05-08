@@ -13,5 +13,11 @@
         <file>images/sort_down.png</file>
         <file>images/sort_up.png</file>
         <file>images/qt_zh_CN.qm</file>
+        <file>images/caret-left.png</file>
+        <file>images/caret-right.png</file>
+        <file>images/checkbox.png</file>
+        <file>images/checkbox--checked.png</file>
+        <file>images/radio-button.png</file>
+        <file>images/radio-button--checked.png</file>
     </qresource>
 </RCC>

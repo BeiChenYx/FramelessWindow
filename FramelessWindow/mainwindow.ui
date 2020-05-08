@@ -19,10 +19,12 @@
 	background-color: #ddedfa;
 }
 #widget_left_nav QToolButton{
-	color: 0xffffff;
+	color: #000000;
 	background-color: none;
     border:none;
     padding: 2px 2px 2px 2px;
+	min-height: 0px;
+    border-radius:0px;
 }
 #widget_left_nav QToolButton:checked{
 	color: #3096f8;
@@ -36,31 +38,6 @@
 #widget_left_nav #HLine{
 	background-color: #ddedfa;
 	border-top: 1px solid #a0a0a0; 
-}
-
-/* 状态栏 */
-QStatusBar{
-	background-color: #117ee0;
-}
-QStatusBar::item{
-    border: none;
-}
-/* 分裂器 */
-QSplitter::handle {
-	background-color: #117ee0;
-	border: none;
-}
-
-QSplitter::handle:horizontal {
-    width: 8px;
-}
-
-QSplitter::handle:vertical {
-    height: 8px;
-}
-
-QSplitter::handle:pressed {
-    background-color: #c2c2c2;
 }
 
 #CustomHorizontalHeaderView::section:horizontal{
@@ -104,7 +81,12 @@ QSplitter::handle:pressed {
 #CustomHeaderView #widget_header QToolButton:checked{
 	background-color: #C2C2C2;
 }
-</string>
+#CustomHeaderView QToolButton{
+    min-height: 0px;
+    border-radius:0px;
+    padding:0px;
+    background-color: transparent;
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">

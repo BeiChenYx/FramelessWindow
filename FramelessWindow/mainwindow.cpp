@@ -12,7 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_pVersionWidget(new VersionInfoWidget("版本号: V1.0.0")),
     m_pCustomTableView(new CustomTableView()),
     m_pListView(new QListView()),
-    m_pTreeView(new QTreeView())
+    m_pTreeView(new QTreeView()),
+    m_pBasicWidget(new BasicWidget(this))
 {
     // 框架   --start
     ui->setupUi(this);
@@ -35,10 +36,13 @@ void MainWindow::initUi()
     ui->splitter->setStretchFactor(0, 1);
     ui->splitter->setStretchFactor(1, 9);
     ui->statusbar->addPermanentWidget(m_pVersionWidget);
+    for(auto pComboBox: findChildren<QComboBox*>()){
+        pComboBox->setView(new QListView());
+    }
     // 框架   --end
 
     // 测试 --start
-    this->addNavStackWidget("", tr("基本组件"), new QWidget(this));
+    this->addNavStackWidget("", tr("基本组件"), m_pBasicWidget);
     this->addNavHLine();
 
     auto tableWidget = new QWidget(this);

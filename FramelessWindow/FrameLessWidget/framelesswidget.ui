@@ -20,7 +20,358 @@
    <string>FramelessWidget</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#windowFrame{
+   <string notr="true">/* 常用控件样式 */
+/* 状态栏 */
+QStatusBar{
+	background-color: #117ee0;
+}
+QStatusBar::item{
+    border: none;
+}
+/* 分裂器 */
+QSplitter::handle {
+	background-color: #117ee0;
+	border: none;
+}
+
+QSplitter::handle:horizontal {
+    width: 8px;
+}
+
+QSplitter::handle:vertical {
+    height: 8px;
+}
+
+QSplitter::handle:pressed {
+    background-color: #c2c2c2;
+}
+QComboBox QAbstractItemView 
+{
+	border: none;
+}
+QComboBox QAbstractItemView::item 
+{
+	color: rgb(0, 0, 0);
+	min-height: 30px;
+}
+QComboBox QAbstractItemView::item:hover {
+	color: rgb(255, 255, 255);
+    background-color: rgba(0, 120, 215, 0.5);
+}
+QComboBox {
+	min-height: 20px;
+    border: 1px solid gray;
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+	padding: 1px 5px 1px 5px;
+}
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    background-color: rgb(255, 255, 255);
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+}
+QComboBox::down-arrow {
+	image: url(:/images/sort_down.png);
+	background-color: transparent;
+    width: 12px;
+    height: 12px;
+}
+QComboBox::drop-down:hover {
+   	background-color: darkgray;
+}
+QLabel{
+	min-height: 20px;
+	color: #000000;
+	background-color: transparent;
+}
+
+QDateTimeEdit,
+QSpinBox,
+QDoubleSpinBox,
+QLineEdit{
+	padding-left: 2px;
+    min-height: 20px;
+    border: 1px solid gray;
+    background-color: rgb(255, 255, 255);
+    selection-background-color: #0078D7;
+}
+QDateTimeEdit:!enabled,
+QDoubleSpinBox:!enabled,
+QSpinBox:!enabled,
+QLineEdit:!enabled{
+    background-color: rgb(220, 220, 220);
+}
+QDateTimeEdit:enabled:hover,
+QDateTimeEdit:enabled:focus,
+QDoubleSpinBox:enabled:hover,
+QDoubleSpinBox:enabled:focus,
+QSpinBox:enabled:hover,
+QSpinBox:enabled:focus,
+QLineEdit:enabled:hover,
+QLineEdit:enabled:focus{
+    border: 1px solid #3190EE;
+}
+
+QDateTimeEdit::up-button,
+QDoubleSpinBox::up-button,
+QSpinBox::up-button {
+	subcontrol-origin: border;
+    subcontrol-position: top right; 
+    width: 14px; 
+	height: 10px;
+	padding: 1px;
+	image: url(:/images/sort_up.png);
+}
+QDateTimeEdit::up-button:pressed,
+QDoubleSpinBox::up-button:pressed,
+QDateTimeEdit::up-button:hover,
+QDoubleSpinBox::up-button:hover,
+QSpinBox::up-button:pressed,
+QSpinBox::up-button:hover {
+    background-color: darkgray;
+}
+QDateTimeEdit::up-arrow,
+QDoubleSpinBox::up-arrow,
+QSpinBox::up-arrow {
+	image:  url(:/images/sort_up.png);
+	width: 6px;
+	height: 6px;
+}
+QDateTimeEdit::down-button,
+QDoubleSpinBox::down-button,
+QSpinBox::down-button {
+    subcontrol-origin: border;
+    subcontrol-position: bottom right;
+	width: 14px; 
+	height: 10px;
+	padding: 1px;
+  	image: url(:/images/sort_down.png);
+}
+QDateTimeEdit::down-button:pressed,
+QDoubleSpinBox::down-button:pressed,
+QDateTimeEdit::down-button:hover,
+QDoubleSpinBox::down-button:hover,
+QSpinBox::down-button:pressed,
+QSpinBox::down-button:hover {
+    background-color: darkgray;
+}
+QDateTimeEdit::down-arrow,
+QDoubleSpinBox::down-arrow,
+QSpinBox::down-arrow {
+    image:  url(:/images/sort_down.png);
+	width: 6px;
+	height: 6px;
+}
+
+QProgressBar {
+    border: 1px solid grey;
+    text-align: right;
+	color: #177fd8;
+	margin-right: 25px; 
+}
+QProgressBar::chunk {
+    background-color: #3096f8;
+    width: 10px;
+    margin: 0.5px;
+}
+
+QGroupBox {
+    background-color: transparent;
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin-top: 2ex;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+    padding: 0 2px; /* y方向, x方向 */
+}
+QGroupBox::indicator {
+    spacing: 5px;
+	width: 15px;
+    height: 15px;
+	color: #000000;
+	background-color: transparent;
+}
+QGroupBox::indicator:unchecked {
+    image: url(:/images/checkbox--checked.png);
+}
+QGroupBox::indicator:checked {
+	image: url(:/images/checkbox--checked.png);
+}
+
+QToolButton,
+QPushButton{
+    min-height: 25px;
+    border-radius:4px;
+    padding:0px 5px;
+    background-color: #3096f8;
+    color: #FFFFFF;
+}
+QToolButton:hover,
+QPushButton:hover{
+    background-color: #177fd8;
+	border: 2px solid #00DDCC;
+    color: #FFFFFF;
+}
+QToolButton:pressed,
+QPushButton:pressed{
+    background-color: #177fd8;
+    color: #FFFFFF;
+}
+QToolButton::checked,
+QPushButton::checked{
+	background-color: #177fd8;
+    color: #FFFFFF;
+}
+QToolButton:disabled,
+QPushButton:disabled{
+    background-color: darkgray;
+    color: #000000;
+}
+
+QRadioButton,
+QCheckBox {
+    spacing: 5px;
+	color: #000000;
+	background-color: transparent;
+}
+QRadioButton::indicator,
+QCheckBox::indicator {
+    width: 20px;
+    height: 20px;
+}
+
+QCheckBox::indicator:unchecked {
+	image: url(:/images/checkbox.png);
+}
+QCheckBox::indicator:checked {
+	image: url(:/images/checkbox--checked.png);
+}
+QRadioButton::indicator:checked:hover,
+QRadioButton::indicator:unchecked:hover,
+QRadioButton::indicator:checked:pressed,
+QRadioButton::indicator:unchecked:pressed,
+QCheckBox::indicator:checked:hover,
+QCheckBox::indicator:unchecked:hover,
+QCheckBox::indicator:checked:pressed,
+QCheckBox::indicator:unchecked:pressed {
+    background-color: rgba(23, 127, 216, 0.1);
+}
+
+QRadioButton::indicator:unchecked{
+	image: url(:/images/radio-button.png);
+}
+QRadioButton::indicator:checked{
+	image: url(:/images/radio-button--checked.png);
+}
+QScrollBar{
+	border:none;
+    background-color: #DCDCDC;
+}
+QScrollBar:horizontal {
+    height: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+QScrollBar:vertical {
+    width: 15px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+QScrollBar::add-page, QScrollBar::sub-page {
+     background-color: transparent;
+}
+QScrollBar::handle {
+    background: #3096f8;
+    min-width: 15px;
+    min-height: 15px
+}
+QScrollBar::add-line:vertical{
+	background-color: transparent;
+	image:url(:/images/sort_down.png) center no-repeat;
+}
+QScrollBar::sub-line:vertical{
+	background-color: transparent;
+	image:url(:/images/sort_up.png) center no-repeat;
+}
+QScrollBar::add-line:horizontal{
+	background-color: transparent;
+	image:url(:/images/caret-right.png) center no-repeat;
+}
+QScrollBar::sub-line:horizontal{
+	background-color: transparent;
+	image:url(:/images/caret-left.png) center no-repeat;
+}
+QScrollBar::add-line:hover,
+QScrollBar::sub-line:hover,
+QScrollBar::handle:hover{
+	background-color: rgba(23, 127, 216, 0.2);
+}
+QScrollBar::handle:pressed{
+	background-color: #177fd8;
+}
+
+QTextBrower,
+QTextEdit{
+	border: none;
+	background-color: rgba(255, 255, 255, 0.9);;
+}
+
+QTabWidget::pane { /* The tab widget frame */
+   	background-color: transparent;
+	border: 1px solid gray;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	padding: 5px;
+}
+QTabWidget::tab-bar {
+    background-color: #FFFFFF;
+    alignment: left; 
+}
+QTabBar::tab {
+    background-color: #ddedfa;
+    border: none;
+    min-width: 40px;
+	min-height: 15px;
+    padding: 5px;
+	margin: 1px;
+	color: #000000;
+}
+QTabBar::tab:selected{
+	background-color: #177fd8;
+	color: #FFFFFF;
+}
+QTabBar::tab:hover {
+    background-color: #3096f8;
+	color: #FFFFFF;
+}
+QTabBar::tab:only-one {
+    margin: 0;
+}
+QTabBar::close-button {
+	image: url(:/images/icon_window_close.png);
+    subcontrol-position: right;
+}
+QTabBar::close-button:hover {
+    background-color: #DC0000;
+}
+QTabBar QToolButton{
+	padding: 0px;
+}
+QTabBar QToolButton::right-arrow { /* the arrow mark in the tool buttons */
+	border-image: url(:/images/caret-right.png);
+}
+
+QTabBar QToolButton::left-arrow {
+	border-image: url(:/images/caret-left.png);
+}
+
+/* 本窗口的样式 */
+#windowFrame{
 	border: 2px solid rgb(194, 194, 194); 
 	gridline-color: rgb(194, 194, 194);
 	border-radius: 1px 1px 1px 1px; 
@@ -41,10 +392,14 @@
   	width:16px;
   	height:16px;
  	padding:4px;
-	border-top-right-radius: 5px;
+	min-height: 16px;
+    border-radius:0px;
+    color: #FFFFFF;
 }
 #windowTitlebar QToolButton:hover{
 	background-color: #2e9eea;
+	border: none;
+    color: #FFFFFF;
 }
 #windowTitlebar QToolButton:pressed{
 	background-color:palette(highlight);
@@ -78,6 +433,8 @@
 	font-weight:bold;
 	font-size:16px;
 }
+
+
 </string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -146,7 +503,7 @@
            <property name="minimumSize">
             <size>
              <width>24</width>
-             <height>24</height>
+             <height>20</height>
             </size>
            </property>
            <property name="maximumSize">
