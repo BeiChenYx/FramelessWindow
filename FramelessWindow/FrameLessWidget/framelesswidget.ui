@@ -45,11 +45,11 @@ QSplitter::handle:vertical {
 QSplitter::handle:pressed {
     background-color: #c2c2c2;
 }
-QComboBox QAbstractItemView 
+QComboBox QAbstractItemView
 {
 	border: none;
 }
-QComboBox QAbstractItemView::item 
+QComboBox QAbstractItemView::item
 {
 	color: rgb(0, 0, 0);
 	min-height: 30px;
@@ -119,8 +119,8 @@ QDateTimeEdit::up-button,
 QDoubleSpinBox::up-button,
 QSpinBox::up-button {
 	subcontrol-origin: border;
-    subcontrol-position: top right; 
-    width: 14px; 
+    subcontrol-position: top right;
+    width: 14px;
 	height: 10px;
 	padding: 1px;
 	image: url(:/images/sort_up.png);
@@ -145,7 +145,7 @@ QDoubleSpinBox::down-button,
 QSpinBox::down-button {
     subcontrol-origin: border;
     subcontrol-position: bottom right;
-	width: 14px; 
+	width: 14px;
 	height: 10px;
 	padding: 1px;
   	image: url(:/images/sort_down.png);
@@ -170,7 +170,7 @@ QProgressBar {
     border: 1px solid grey;
     text-align: right;
 	color: #177fd8;
-	margin-right: 25px; 
+	margin-right: 25px;
 }
 QProgressBar::chunk {
     background-color: #3096f8;
@@ -197,7 +197,7 @@ QGroupBox::indicator {
 	background-color: transparent;
 }
 QGroupBox::indicator:unchecked {
-    image: url(:/images/checkbox--checked.png);
+    image: url(:/images/checkbox.png);
 }
 QGroupBox::indicator:checked {
 	image: url(:/images/checkbox--checked.png);
@@ -205,16 +205,17 @@ QGroupBox::indicator:checked {
 
 QToolButton,
 QPushButton{
-    min-height: 25px;
     border-radius:4px;
-    padding:0px 5px;
+	min-height: 20px;
+	padding-left: 6px;
+	padding-right: 6px;
     background-color: #3096f8;
     color: #FFFFFF;
 }
 QToolButton:hover,
 QPushButton:hover{
     background-color: #177fd8;
-	border: 2px solid #00DDCC;
+	border: 1px solid #00DDCC;
     color: #FFFFFF;
 }
 QToolButton:pressed,
@@ -336,7 +337,7 @@ QTabWidget::pane { /* The tab widget frame */
 }
 QTabWidget::tab-bar {
     background-color: #FFFFFF;
-    alignment: left; 
+    alignment: left;
 }
 QTabBar::tab {
     background-color: #ddedfa;
@@ -378,16 +379,16 @@ QTabBar QToolButton::left-arrow {
 
 /* 本窗口的样式 */
 #windowFrame{
-	border: 2px solid rgb(194, 194, 194); 
+	border: 2px solid rgb(194, 194, 194);
 	gridline-color: rgb(194, 194, 194);
-	border-radius: 1px 1px 1px 1px; 
+	border-radius: 1px 1px 1px 1px;
 	background-color: palette(Window);
 }
 #windowTitlebar{
 	border: 0px none palette(base);
 	border-top-left-radius:2px;
 	border-top-right-radius:2px;
-	border-bottom: 8px solid #117ee0; 
+	border-bottom: 8px solid #117ee0;
 	background-image: url(:/images/6.png);
 	background-color: #237fca;
 	color: #ffffff;
@@ -435,7 +436,7 @@ QTabBar QToolButton::left-arrow {
 	image: url(:/images/fullscreen_exit.png);
 }
 #windowTitlebar #label_title{
-	color: #ffffff;	
+	color: #ffffff;
 	font-weight:bold;
 	font-size:16px;
 }
