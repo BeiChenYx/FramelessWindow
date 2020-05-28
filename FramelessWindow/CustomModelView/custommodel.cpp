@@ -9,7 +9,7 @@ CustomModel::CustomModel(QAbstractItemModel *parent) : QAbstractItemModel(parent
     auto now = QDateTime::currentDateTime();
     for (int i=0; i<10; ++i) {
         // typedef std::tuple<int, int, int, int, QString, QDateTime> ModeLCol;
-        m_stocks.append({i, i*100, qrand() % 100, qrand() % 300, QString("name%1").arg(qrand() % 100), now.addSecs(i)});
+        m_stocks.append({i, i*100, qrand() % 100, qrand() % 300, QString("name%1\nname_name").arg(qrand() % 100), now.addSecs(i)});
 //        auto item = qrand() % 100;
 //        intList.push_back(item);
 //        qDebug() << item;
