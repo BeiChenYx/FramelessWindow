@@ -30,6 +30,7 @@ public:
     QModelIndex parent(const QModelIndex &child) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
     bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role = Qt::EditRole) override;
+    virtual void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
 
 signals:
 

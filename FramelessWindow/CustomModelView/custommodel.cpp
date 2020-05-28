@@ -114,3 +114,23 @@ QModelIndex CustomModel::parent(const QModelIndex &child) const
     Q_UNUSED(child);
     return QModelIndex();
 }
+
+void CustomModel::sort(int column, Qt::SortOrder order)
+{
+    // 修改之前发生信号
+    emit layoutAboutToBeChanged();
+    if(column <= 4 && column >= 0){
+        if(order == Qt::AscendingOrder){
+            std::sort(m_stocks.begin(), m_stocks.end(), [](QVector<QVariant> pre, QVector<QVariant> item){
+                return pre.at(2).toInt() < item.at(2).toInt();
+            });
+        }
+        if(order == Qt::DescendingOrder){
+            std::sort(m_stocks.rbegin(), m_stocks.rend(), [](QVector<QVariant> pre, QVector<QVariant> item){
+                return pre.at(2).toInt() < item.at(2).toInt();
+            });
+        }
+    }
+    // 修改之后要发送的信号
+    emit layoutChanged();
+}
